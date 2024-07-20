@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+  <!-- govp属性 -->
+  <!-- 不会改变 -->
+  <groupId>com.java</groupId>
+  <artifactId>maven-pom-dependenies-04</artifactId>
+  <!-- 构建构成  - 部署  - 修改 -->
+  <version>1.0.0</version>
+  <!-- maven工程的打包方式  java jar [默认值] web war 不打包 pom -->
+  <packaging>war</packaging>
+
+  <!-- 声明版本号 -->
+  <properties>
+<!--    声明一个变量 ，声明完变量以后，在其他的位置可以引用${ 变量名 }-->
+<!--        注意：声明的标签建议两层以上命名，version 1.15.1-->
+    <jackson.version>2.15.2</jackson.version>
+    <mabven.comiler.source>17</mabven.comiler.source>
+    <mabven.comiler.target>17</mabven.comiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+
+  <!-- 第三方依赖信息声明
+        dependencies  - 项目依赖信息的集合
+          dependency  - 每个依赖项
+              [gav] - 依赖的信息，就是其他maven的工程[jar]
+       第三方依赖信息怎么知道？   jackson-core
+           1.maven提供的查询官网        https://mvnrepository.com/
+           2.maven插件
+                  tools
+                       maven-search  输入信息即可
+       扩展：
+           1.提取版本号，统一管理
+           2.可选属性 scope
+                默认：compile     main  test   打包和运行
+                      test   测试用例
+                      runtime   main不会，test不会   打包和运行 mysql Class.forName("com.mysql.jdbc.Driver")
+                      provided  main会使用，test,打包和运行不会   servlet HttpServlet tomcat提供了servlet
+                总结,他是一种锦上添花的手段，如果你掌握不好，就默认值compile ，全部生效
+                system    类似provided，但是可以指定路径，不推荐使用
+
+   -->
+  <dependencies>
+
+<!--    <dependency>-->
+<!--      <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--      <artifactId>jackson-core</artifactId>-->
+<!--      <version>${jackson.version}</version>-->
+<!--      <scope>compile</scope>-->
+<!--    </dependency>-->
+  <!--
+       依赖传递：导入依赖，会自动导入依赖的依赖（compile dependencies）
+                简化依赖的导入，确保以来的版本无冲突
+       依赖冲突：发现已经存在依赖（重复依赖）会终止依赖传递，避免循环依赖和重复依赖的问题！
+
+       依赖冲突发生场景：重复依赖！
+            A - B  1.0
+            C - B  2.0
+       依赖冲突的解决原则：
+          第一原则：谁短谁有先，引用的路径长度
+             A - C - B 1.0
+             F - B 2.0       A C F B  2.0
+           第二原则：谁上谁优先，dependencies声明的先后顺序
+              A - B  1.0
+              F - B  2.0
+              A - F - B 1.0
+
+ -->
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>test</scope>
+    </dependency>
+
+
+
+  </dependencies>
+
+
+
+</project>
